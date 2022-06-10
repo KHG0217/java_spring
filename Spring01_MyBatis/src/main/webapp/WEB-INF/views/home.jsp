@@ -16,6 +16,13 @@
 			<lu><a href="member/list.do">회원목록보기</a></lu>
 			<lu><a href="member/list2.do">회원목록보기2</a></lu>
 			<li><a href="todo/list.do">할일 목록 보기</a></li>
+			<li><a href="todo/list2.do">할일 목록 보기2</a></li>
+			<li><a href="study.jsp">테스트</a></li>
+			<li><a href="send.do">json 테스트</a></li>
+			<li><a href="send2.do">json2 테스트</a></li>
+			<li><a href="send3.do">json3 테스트</a></li>
+			<li><a href="send4.do">json4 테스트</a></li>
+			<li><a href="file/upload_form.do">파일 업로드 테스트</a></li>
 		</ul>
 		
 		<h2>공지사항</h2>

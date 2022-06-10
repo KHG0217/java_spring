@@ -14,12 +14,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring01.member.dao.MemberDao;
 import com.gura.spring01.member.dto.MemberDto;
+import com.gura.spring01.member.service.MemberService;
 
+/*
+ * 	컨트롤러에서는 비즈니스 로직을 처리하지 않는게 원칙이다.
+ * 
+ * 	비즈니스 로직은 Service 객체에서 처리하고 
+ * 
+ * 	컨트롤러에서는
+ * 
+ *  클라이언트의 어떤 경로 요청에 대해서
+ *  
+ *  어떤 Service로 로직을 처리하고
+ *  
+ *  어디로 어떻게 이동해서 응답할지에 대한 정보만 결정하는 것이 좋다.
+ *  
+ *  따라서 컨트롤러에서는 Dao에 직접 의존하기 보다는 Service에 의존해서
+ *  
+ *  로직을 처리 해야 한다.
+ */
 @Controller
 public class MemberController {
 	//핵심 의존 객체 주입받기
 	@Autowired
 	private MemberDao dao;
+	
+	//서비스로 의존하기 (주로 서비스로 의존하여 많이 사용)
+	@Autowired
+	private MemberService service;
 	
 	@RequestMapping("/member/insert")
 	public String insert(HttpServletRequest request) {
@@ -65,8 +87,8 @@ public class MemberController {
 	@RequestMapping("/member/insert3")
 	public String insert3(@ModelAttribute MemberDto dto) {
 		
-		//2. DB에 저장하고
-		dao.insert(dto);
+		//2. 서비스 객체를 이용해서 회원 한명의 정보를 저장하고
+		service.addMember(dto);
 		//3. view page 로 forward 이동해서 응답
 		
 		return "member/insert";
@@ -93,21 +115,21 @@ public class MemberController {
 	//"/member/list.do" 요청을 처리할 메소드
 	@RequestMapping("/member/list2.do")
 	public ModelAndView list2(ModelAndView mView) {
-		//응답에 필요한 Mode(데이터)
-		List<MemberDto> list=dao.getList();
 		
-		//ModelAndView 객체에 Model과 view page 정보를 담고
-		mView.addObject("list", list);
+		//서비스 객체를 이용해서 회원 목록을 ModelAndView 객체에 담고
+		service.getListMember(mView);
+		
+		//ModelAndView 객체에 view page 정보도 담아서
 		mView.setViewName("member/list");
 		
-		//리턴해주면 위와 동일하게 동작한다.
+		//view page로 forward 이동해서 회원 목록 응답하기		
 		return mView;
 	}
 	
 	@RequestMapping(value="/member/delete.do", method = RequestMethod.GET)
 	public String delete(@RequestParam int num) {
 
-		dao.delete(num);
+		service.deleteMember(num);
 		
 		/*
 		 * 	리다일렉트 응답하기(클라이언트에게 새로운 경로로 요청을 다시 하라고 강제하기)
@@ -118,19 +140,19 @@ public class MemberController {
 	}
 	
 	   @RequestMapping("/member/updateform")
-	   public String updateform(int num, HttpServletRequest request) {
-	      //1. 수정할 회원의 정보를 얻어와서
-	      MemberDto dto=dao.getData(num);
-	      //2. request scope 에 담고
-	      request.setAttribute("dto", dto);
-	      //3. view page 로 forward 이동해서 회원 수정 폼을 출력해 준다.
-	      return "member/updateform";
+	   public ModelAndView updateform(int num, ModelAndView mView) {
+	      //1. 서비스 객체를 이용해서 회원 한명의 정보를 ModelAndView 객체에 담는다.
+	      service.getMember(num, mView);
+	      //2. ModelAndView 객체에 view page 정보를 담고
+	      mView.setViewName("member/updateform");
+	      //3. ModelAndView 객체를 리턴해 준다.
+	      return mView;
 	   }
 	   
 	   @RequestMapping("/member/update")
 	   public String update(MemberDto dto) {
 		   //DB에 수정할 회원의 정보를 수정 반영하고
-		   dao.update(dto);
+		   service.updateMember(dto);
 		   //view page로 forward 이동해서 응답하기
 		   return "member/update";
 	   }

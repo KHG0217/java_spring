@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="todo">
-	<select id="getList" resultType="com.gura.spring01.todo.dto.TodoDto">
+	<select id="getList" resultType="todoDto">
 		select num,content,regdate
 		from todo
 		order by num asc
 	</select>
 	
-	<select id="getData" parameterType="int" resultType="com.gura.spring01.todo.dto.TodoDto">
+	<select id="getData" parameterType="int" resultType="todoDto">
 		select num,content,regdate
 		from todo
 		where num=#{num}
 	</select>
 	
-	<insert id="insert" parameterType="com.gura.spring01.todo.dto.TodoDto">
+	<insert id="insert" parameterType="todoDto">
 		insert into todo
 		(num,content,regdate)
 		values(todo_seq.nextval,#{content},sysdate)
@@ -24,7 +24,7 @@
 		where num=#{num}
 	</delete>
 	
-	<update id="update" parameterType="com.gura.spring01.todo.dto.TodoDto">
+	<update id="update" parameterType="todoDto">
 		update todo
 		set content=#{content}, regdate=sysdate
 		where num=#{num}
