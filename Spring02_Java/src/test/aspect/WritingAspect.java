@@ -30,8 +30,7 @@ public class WritingAspect {
 /*
  *    -Aspectj Expression @Before(여기가 어스펙j)
  * 
- *    1. execution(* *(..)) => 접근 가능한 모든 메소드가 
- *       point cut
+ *    1. execution(* *(..)) => 접근 가능한 모든 메소드 point cut
  *    
  *                             모든클레스에  모든메소드
  *    2. execution(* test.service.*.*(..)) 

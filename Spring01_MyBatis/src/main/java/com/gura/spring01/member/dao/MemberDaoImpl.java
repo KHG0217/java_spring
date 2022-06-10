@@ -27,6 +27,7 @@ public class MemberDaoImpl implements MemberDao {
 		//							selectList에  셀렉된 row가 하나하나씩 담긴다
 		//							select된 것이 2개이상일때 타입은 Mapper에 resultType이다.
 		//							select된 것이 1개라면 그 타입이다. (String,num..)
+		//										mapper namespace=member = member. <select id="getList = .getList
 		List<MemberDto> list = session.selectList("member.getList");
 		//row가 많을때 selectList row가 하나일때 selectOne
 

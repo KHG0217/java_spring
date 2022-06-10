@@ -14,7 +14,7 @@ import com.gura.spring01.member.dao.MemberDao;
 import com.gura.spring01.member.dto.MemberDto;
 
 /*
- * 	1.	jackson-databind 라이브러리가 pome.xml에 dependency에 명시가 되어 있고
+ * 	1.	jackson-databind 라이브러리가 pom.xml에 dependency에 명시가 되어 있고
  * 	2.	servlet-context.xml 에 <annotation-driven/>이 명시 되어 있고
  * 	3. 	컨트롤러의 메소드 @ResponseBody 어노테이션이 붙어 있으면
  * 		Map or dto or List 객체 담긴 내용이 jso 문자열로 반환되어 응답된다.

@@ -25,6 +25,8 @@ import com.gura.spring01.file.dto.FileDto;
 
 @Controller
 public class FileController {
+	//MultipartFile
+	//form 에서 file을 읽어올 객체
 	
 	//파일 업로드 요청 처리
 	@RequestMapping("/file/upload")
