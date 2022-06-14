@@ -23,12 +23,17 @@
 			FROM
 				(SELECT num,writer,title,content,viewCount,regdate
 				FROM board_cafe
-				<include refid="searchCondition"/>
+				<include refid="searchCondition"/> <!-- id=searchCondition 을 불러다 쓰기 -->
 				ORDER BY num DESC) result1)
 		<![CDATA[ 
 		WHERE rnum >= #{startRowNum} AND rnum <= #{endRowNum}
 		]]>
+		
 	</select>
+		<!-- 
+			비교 연산자 사용 ? -? xml문서에서는 > < 인식 에러오류 방지를 위해 사용
+			<![CDATA[여기 안에 코딩]>
+		 -->
 	
 	<select id="getCount" parameterType="cafeDto" resultType="int">
 		SELECT NVL(MAX(ROWNUM), 0)
@@ -54,6 +59,17 @@
 		WHERE num=#{num}
 			
 	</select>
+	
+	<!-- 
+		LAG - 뒤쳐지는것 
+		LAG(num,1,0) OVER (ORDER BY num DESC)  -> num을 내림차순 한것중에 하나 뒤쳐지는것
+												   없으면  기본값 0 
+												   ->이전글 (최신글 ++)
+		LEAD - 앞서는것
+		LEAD(num,1,0) OVER (ORDER BY num DESC) -> num을 내림차순 한것중에 하나 앞서는것
+												   없으면  기본값 0
+												   ->다음글(옛날글 ++)
+	 -->
 	
 	<select id="getData2" parameterType="cafeDto" resultType="cafeDto">
 		SELECT result1.*
